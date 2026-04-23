@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archive — Noah Bill</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --white: rgba(255, 255, 255, 0.9);
+      --white-mid: rgba(255, 255, 255, 0.4);
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #0d0d0d;
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    /* --- HEADER --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 1.5rem 1.75rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      mix-blend-mode: difference;
+    }
+
+    .name {
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      color: var(--white);
+    }
+
+    .name span {
+      display: block;
+      color: var(--white-mid);
+      font-weight: 300;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    nav a:hover {
+      color: var(--white-mid);
+    }
+
+    nav a.active {
+      color: var(--white-mid);
+    }
+
+    /* --- GRID --- */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+      padding: 4px;
+    }
+
+    .grid-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 2 / 3;
+      background: #1a1a1a;
+    }
+
+    .grid-item img,
+    .grid-item video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .grid-item:hover img,
+    .grid-item:hover video {
+      transform: scale(1.03);
+    }
+
+    /* --- INFO POPUP --- */
+    #info-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.35); z-index: 10000; backdrop-filter: blur(4px);
+    }
+    #info-overlay.open { display: flex; align-items: center; justify-content: center; }
+    #info-popup { background: #111; padding: 2.5rem; width: 420px; max-width: 90vw; position: relative; border-radius: 18px; }
+    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Outfit', sans-serif; line-height: 1; }
+    #info-close:hover { color: #fff; }
+    .info-time { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; letter-spacing: 0.05em; }
+    .info-name { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; color: #fff; }
+    .info-bio { font-size: 0.95rem; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+    .info-email { font-size: 0.95rem; font-weight: 400; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 1px; }
+
+  </style>
+</head>
+<body>
+
+  <!-- INFO POPUP -->
+  <div id="info-overlay">
+    <div id="info-popup">
+      <button id="info-close">×</button>
+      <div class="info-time" id="info-clock"></div>
+      <div class="info-name">Noah Bill</div>
+      <p class="info-bio">Graphic designer and visual communicator based in Switzerland. Currently studying Visual Communication and working on projects that sit at the intersection of type, image and concept.</p>
+      <a class="info-email" href="mailto:noah@noahbill.ch">noah@noahbill.ch</a>
+    </div>
+  </div>
+
+  <header>
+    <a class="name" href="index.html">
+      Noah Bill<br>
+      <span>Visual Communication</span>
+    </a>
+    <nav>
+      <a href="archive.html" class="active">Archive</a>
+      <a href="shots.html">Shots</a>
+      <a href="#" id="info-btn">Info</a>
+    </nav>
+  </header>
+
+  <div class="grid">
+
+    <div class="grid-item">
+      <video src="images/archive/bauhaus.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/8ref.gif" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/Endzeit.jpg" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/bdaybash.gif" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/9.gif" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/AtiFlohmi.jpg" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/Silvester.png" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/Type-Hype_grün_Plaki_Flaashhhyy_anchor.jpg" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/Type-Hype.jpg" alt="Archive">
+    </div>
+
+    <div class="grid-item">
+      <img src="images/archive/Type-Hype_Plaki_clean.jpg" alt="Archive">
+    </div>
+
+  </div>
+
+  <script>
+    const overlay = document.getElementById('info-overlay');
+    document.getElementById('info-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      overlay.classList.add('open');
+    });
+    document.getElementById('info-close').addEventListener('click', function() {
+      overlay.classList.remove('open');
+    });
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      document.getElementById('info-clock').textContent = 'Bern (CH) — ' + time;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+</body>
+</html>

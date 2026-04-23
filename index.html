@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noah Bill</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --black: rgba(0, 0, 0, 0.85);
+      --black-mid: rgba(0, 0, 0, 0.5);
+      --black-light: rgba(0, 0, 0, 0.3);
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #fff;
+      color: var(--black);
+      cursor: default;
+    }
+
+    /* --- LAYOUT --- */
+    .site {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      padding: 1.5rem 1.75rem;
+    }
+
+    /* --- HEADER --- */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .name {
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .name span {
+      display: block;
+      color: var(--black-mid);
+      font-weight: 300;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+
+    nav a:hover {
+      color: var(--black-mid);
+    }
+
+    /* --- PROJECTS --- */
+    .projects-section {
+      padding-bottom: 0.25rem;
+    }
+
+    .label {
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--black);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.35rem;
+    }
+
+    .projects {
+      font-size: clamp(2.2rem, 5vw, 3.75rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .projects a {
+      color: var(--black);
+      text-decoration: none;
+      display: inline;
+      transition: color 0.15s ease;
+      cursor: pointer;
+    }
+
+    .projects a:hover {
+      color: var(--black-light);
+    }
+
+    .projects .sep {
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    /* --- PREVIEW IMAGE --- */
+    #preview {
+      position: fixed;
+      pointer-events: none;
+      width: 480px;
+      height: 600px;
+      object-fit: cover;
+      border-radius: 18px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 9999;
+      display: block;
+    }
+    /* --- INFO POPUP --- */
+    #info-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 10000;
+      backdrop-filter: blur(4px);
+    }
+
+    #info-overlay.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #info-popup {
+      background: #111;
+      padding: 2.5rem;
+      width: 420px;
+      max-width: 90vw;
+      position: relative;
+      border-radius: 18px;
+    }
+
+    #info-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1;
+    }
+
+    #info-close:hover { color: #fff; }
+
+    .info-time {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .info-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .info-bio {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 1.5rem;
+    }
+
+    .info-email {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      padding-bottom: 1px;
+    }
+
+    .info-email:hover {
+      color: rgba(255,255,255,0.6);
+      border-color: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <img id="preview" src="" alt="">
+
+  <!-- INFO POPUP -->
+  <div id="info-overlay">
+    <div id="info-popup">
+      <button id="info-close">×</button>
+      <div class="info-time" id="info-clock"></div>
+      <div class="info-name">Noah Bill</div>
+      <p class="info-bio">Graphic designer and visual communicator based in Switzerland. Currently studying Visual Communication and working on projects that sit at the intersection of type, image and concept.</p>
+      <a class="info-email" href="mailto:noah@noahbill.ch">noah@noahbill.ch</a>
+    </div>
+  </div>
+
+  <div class="site">
+    <header>
+      <div class="name">
+        Noah Bill<br>
+        <span>Visual Communication</span>
+      </div>
+      <nav>
+        <a href="archive.html">Archive</a>
+        <a href="shots.html">Shots</a>
+        <a href="#" id="info-btn">Info</a>
+      </nav>
+    </header>
+
+    <div class="projects-section">
+      <div class="label">Selected work:</div>
+      <div class="projects">
+        <a
+          class="project"
+          href="les-mecs-sportifs.html"
+          data-image="https://freight.cargo.site/t/original/i/X2903072132058560340976237192798/dedeAA017A-2.jpg"
+        >Les Mecs Sportifs</a><span class="sep">,¹ </span><a
+          class="project"
+          href="jahrring.html"
+          data-image="images/jahrring/frontpage.png"
+        >Jahrring</a><span class="sep">,² </span><a
+          class="project"
+          href="motel-pool.html"
+          data-image="images/motel-pool/PB_Motel-Pool.jpg"
+        >Motel Pool</a><span class="sep">,³ </span><a
+          class="project"
+          href="#"
+          data-image=""
+        >A24 Frames</a><span class="sep">,⁴ </span><a
+          class="project"
+          href="chinder-buechli.html"
+          data-image="images/chinder-buechli/fuer-wander.png"
+        >Chinder-Büechli</a><span class="sep">,⁵ </span><a
+          class="project"
+          href="herrmann-druck.html"
+          data-image="images/herrmann-druck/cover-mockup.jpg"
+        >Herrmann Druck</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const preview = document.getElementById('preview');
+
+    document.addEventListener('mousemove', function(e) {
+      preview.style.left = (e.clientX - preview.offsetWidth / 2) + 'px';
+      preview.style.top  = (e.clientY - preview.offsetHeight - 20) + 'px';
+    });
+
+    // INFO POPUP
+    const overlay = document.getElementById('info-overlay');
+    document.getElementById('info-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      overlay.classList.add('open');
+    });
+    document.getElementById('info-close').addEventListener('click', function() {
+      overlay.classList.remove('open');
+    });
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) overlay.classList.remove('open');
+    });
+
+    // LIVE CLOCK (European time — CET/CEST)
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('de-CH', {
+        timeZone: 'Europe/Zurich',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      document.getElementById('info-clock').textContent = 'Bern (CH) — ' + time;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    document.querySelectorAll('a.project').forEach(function(link) {
+      link.addEventListener('mouseenter', function() {
+        const img = this.getAttribute('data-image');
+        if (img) {
+          preview.src = img;
+          preview.style.opacity = '1';
+        }
+      });
+      link.addEventListener('mouseleave', function() {
+        preview.style.opacity = '0';
+      });
+    });
+  </script>
+
+</body>
+</html>
