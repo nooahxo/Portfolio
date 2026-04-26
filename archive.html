@@ -111,6 +111,26 @@
       }
     }
 
+    /* --- LIGHTBOX --- */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 20000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .grid-item img, .grid-item video { cursor: zoom-in; }
+
     /* --- INFO POPUP --- */
     #info-overlay {
       display: none; position: fixed; inset: 0;
@@ -196,7 +216,35 @@
 
   </div>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
   <script>
+    // LIGHTBOX
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.grid-item img').forEach(function(img) {
+      img.addEventListener('click', function() {
+        lightboxImg.src = this.src;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightbox.addEventListener('click', function() {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+      }
+    });
+
     const overlay = document.getElementById('info-overlay');
     document.getElementById('info-btn').addEventListener('click', function(e) {
       e.preventDefault();

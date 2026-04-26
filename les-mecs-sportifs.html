@@ -127,6 +127,26 @@
       .description { padding: 2rem 1.25rem 4rem; }
       .desc-text { font-size: 1rem; }
     }
+
+    /* --- LIGHTBOX --- */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 20000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 4px;
+    }
+    .img-row img { cursor: zoom-in; }
   </style>
 </head>
 <body>
@@ -191,7 +211,35 @@
     </p>
   </div>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
   <script>
+    // LIGHTBOX
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.img-row img').forEach(function(img) {
+      img.addEventListener('click', function() {
+        lightboxImg.src = this.src;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightbox.addEventListener('click', function() {
+      lightbox.classList.remove('open');
+      lightboxImg.src = '';
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        lightbox.classList.remove('open');
+        lightboxImg.src = '';
+      }
+    });
+
     // MARQUEE SEAMLESS LOOP
     var track = document.querySelector('.marquee-track');
     track.innerHTML += track.innerHTML;
