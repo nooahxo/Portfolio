@@ -220,7 +220,20 @@
     </p>
   </div>
 
+  <!-- LIGHTBOX -->
+  <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+
   <script>
+    // LIGHTBOX
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('img:not(.first-img)').forEach(function(img) {
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', function() { lightboxImg.src = this.src; lightbox.classList.add('open'); });
+    });
+    lightbox.addEventListener('click', function() { lightbox.classList.remove('open'); lightboxImg.src = ''; });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { lightbox.classList.remove('open'); lightboxImg.src = ''; } });
+
     // MARQUEE SEAMLESS LOOP
     var track = document.querySelector('.marquee-track');
     track.innerHTML += track.innerHTML;
