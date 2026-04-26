@@ -183,8 +183,7 @@
 
   <!-- BILDER REIHE 1 -->
   <div class="img-row first">
-    <img src="/images/a24-frames/aftersun1.png" alt="A24 Frames">
-    <img src="/images/a24-frames/lighthouse1.png" alt="A24 Frames">
+    <img src="/images/a24-frames/aftersun1.png" alt="A24 Frames" style="width:100%;height:calc(100vh - 3rem);object-fit:cover;display:block;">
   </div>
 
   <!-- MARQUEE -->
@@ -201,17 +200,12 @@
     </div>
   </div>
 
-  <!-- BILDER REIHE 2 -->
-  <div class="img-row">
-    <img src="/images/a24-frames/aftersun2.png" alt="A24 Frames">
-    <img src="/images/a24-frames/lighthouse2.png" alt="A24 Frames">
-  </div>
-
-  <!-- BILDER REIHE 3 -->
-  <div class="img-row">
-    <img src="/images/a24-frames/marty1.png" alt="A24 Frames">
-    <img src="/images/a24-frames/marty2.png" alt="A24 Frames">
-  </div>
+  <!-- BILDER EINZELN -->
+  <img src="/images/a24-frames/aftersun2.png" alt="A24 Frames" style="width:100%;height:100vh;object-fit:cover;display:block;">
+  <img src="/images/a24-frames/lighthouse1.png" alt="A24 Frames" style="width:100%;height:100vh;object-fit:cover;display:block;">
+  <img src="/images/a24-frames/lighthouse2.png" alt="A24 Frames" style="width:100%;height:100vh;object-fit:cover;display:block;">
+  <img src="/images/a24-frames/marty1.png" alt="A24 Frames" style="width:100%;height:100vh;object-fit:cover;display:block;">
+  <img src="/images/a24-frames/marty2.png" alt="A24 Frames" style="width:100%;height:100vh;object-fit:cover;display:block;">
 
   <!-- BESCHREIBUNG -->
   <div class="description">
@@ -230,9 +224,8 @@
       var marqueeH = marquee.offsetHeight;
       var viewH = window.innerHeight;
       var imgH = viewH - marqueeH;
-      document.querySelectorAll('.img-row.first img').forEach(function(img) {
-        img.style.height = imgH + 'px';
-      });
+      var firstImg = document.querySelector('.img-row.first img');
+      if (firstImg) firstImg.style.height = imgH + 'px';
     }
     fixHeight();
     window.addEventListener('resize', fixHeight);
