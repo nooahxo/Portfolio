@@ -181,10 +181,8 @@
     </nav>
   </header>
 
-  <!-- BILDER REIHE 1 -->
-  <div class="img-row first">
-    <img src="/images/a24-frames/aftersun1.png" alt="A24 Frames" style="width:100%;height:calc(100vh - 3rem);object-fit:contain;display:block;background:#000;">
-  </div>
+  <!-- BILD 1 -->
+  <img src="/images/a24-frames/aftersun1.png" alt="A24 Frames" class="first-img" style="width:100%;object-fit:contain;display:block;background:#000;">
 
   <!-- MARQUEE -->
   <div class="marquee-wrap">
@@ -224,7 +222,7 @@
       var marqueeH = marquee.offsetHeight;
       var viewH = window.innerHeight;
       var imgH = viewH - marqueeH;
-      var firstImg = document.querySelector('.img-row.first img');
+      var firstImg = document.querySelector('.first-img');
       if (firstImg) firstImg.style.height = imgH + 'px';
     }
     fixHeight();
