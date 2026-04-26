@@ -104,6 +104,13 @@
       transform: scale(1.03);
     }
 
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
     /* --- INFO POPUP --- */
     #info-overlay {
       display: none; position: fixed; inset: 0;

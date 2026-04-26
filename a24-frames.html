@@ -164,6 +164,14 @@
       object-fit: cover;
       display: block;
     }
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      .first-img { height: 56vw !important; }
+      .marquee-track span { font-size: clamp(1rem, 5vw, 2rem); }
+      .description { padding: 2rem 1.25rem 4rem; }
+      .desc-text { font-size: 1rem; }
+    }
   </style>
 </head>
 <body>

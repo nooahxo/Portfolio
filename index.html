@@ -211,7 +211,36 @@
       color: rgba(255,255,255,0.6);
       border-color: rgba(255,255,255,0.2);
     }
-  </style>
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      #preview { display: none; }
+
+      .site {
+        padding: 1.25rem;
+      }
+
+      .name {
+        font-size: 0.95rem;
+      }
+
+      nav {
+        gap: 1rem;
+      }
+
+      nav a {
+        font-size: 0.95rem;
+      }
+
+      .label {
+        font-size: 0.95rem;
+      }
+
+      .projects {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        line-height: 1.1;
+      }
+    }
 </head>
 <body>
 
@@ -259,7 +288,7 @@
         >Motel Pool</a><span class="sep">, <sup>3</sup> </span><a
           class="project"
           href="/a24-frames.html"
-          data-image="images/a24-frames/a24_cover.png"
+          data-image="images/A24 Frames/a24_cover.png"
         >A24 Frames</a><span class="sep">, <sup>4</sup> </span><a
           class="project"
           href="/chinder-buechli.html"
