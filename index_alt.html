@@ -42,15 +42,9 @@
     .site {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       min-height: 100vh;
       padding: 1.5rem 1.75rem;
-    }
-
-    .main {
-      display: flex;
-      flex: 1;
-      justify-content: space-between;
-      gap: 3rem;
     }
 
     /* --- HEADER --- */
@@ -92,7 +86,6 @@
 
     /* --- PROJECTS --- */
     .projects-section {
-      align-self: flex-end;
       padding-bottom: 0.25rem;
     }
 
@@ -101,21 +94,20 @@
       font-weight: 400;
       color: var(--black);
       letter-spacing: -0.01em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.35rem;
     }
 
     .projects {
-      display: flex;
-      flex-direction: column;
+      font-size: clamp(2.2rem, 5vw, 3.75rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
     }
 
     .projects a {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      font-weight: 400;
-      line-height: 1.08;
-      letter-spacing: -0.02em;
       color: var(--black);
       text-decoration: none;
+      display: inline;
       transition: color 0.15s ease;
       cursor: pointer;
     }
@@ -124,22 +116,23 @@
       color: var(--black-light);
     }
 
-    /* --- PREVIEW PANEL --- */
-    .preview-panel {
-      align-self: flex-start;
-      width: 38%;
-      max-width: 620px;
-      flex-shrink: 0;
+    .projects .sep {
+      color: var(--black);
+      font-weight: 400;
     }
 
+    /* --- PREVIEW IMAGE --- */
     #preview {
-      width: 100%;
-      aspect-ratio: 4 / 5;
+      position: fixed;
+      pointer-events: none;
+      width: 480px;
+      height: 600px;
       object-fit: cover;
       border-radius: 18px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      z-index: 9999;
       display: block;
-      opacity: 1;
-      transition: opacity 0.25s ease;
     }
     /* --- INFO POPUP --- */
     #info-overlay {
@@ -221,15 +214,7 @@
 
     /* --- MOBILE --- */
     @media (max-width: 768px) {
-      .preview-panel { display: none; }
-
-      .main {
-        flex-direction: column;
-      }
-
-      .projects-section {
-        align-self: auto;
-      }
+      #preview { display: none; }
 
       .site {
         padding: 1.25rem;
@@ -251,14 +236,16 @@
         font-size: 0.95rem;
       }
 
-      .projects a {
+      .projects {
         font-size: clamp(1.8rem, 8vw, 2.8rem);
-        line-height: 1.15;
+        line-height: 1.1;
       }
     }
   </style>
 </head>
 <body>
+
+  <img id="preview" src="" alt="">
 
   <!-- INFO POPUP -->
   <div id="info-overlay">
@@ -284,72 +271,44 @@
       </nav>
     </header>
 
-    <div class="main">
-      <div class="projects-section">
-        <div class="label">Ausgewählte Arbeiten:</div>
-        <div class="projects">
-          <a
-            class="project"
-            href="/les-mecs-sportifs.html"
-            data-image="https://freight.cargo.site/t/original/i/X2903072132058560340976237192798/dedeAA017A-2.jpg"
-          >Les Mecs Sportifs</a>
-          <a
-            class="project"
-            href="/jahrring.html"
-            data-image="images/Jahrring/frontpage.png"
-          >Jahrring</a>
-          <a
-            class="project"
-            href="/motel-pool.html"
-            data-image="images/motel-pool/PB_Motel-Pool.jpg"
-          >Motel Pool</a>
-          <a
-            class="project"
-            href="/a24-frames.html"
-            data-image="images/A24 Frames/a24_cover.png"
-          >A24 Frames</a>
-          <a
-            class="project"
-            href="/chinder-buechli.html"
-            data-image="images/chinder-buechli/fuer-wander.png"
-          >Chinder-Büechli</a>
-          <a
-            class="project"
-            href="/herrmann-druck.html"
-            data-image="images/herrmann-druck/cover-mockup.jpg"
-          >Herrmann Druck</a>
-        </div>
-      </div>
-
-      <div class="preview-panel">
-        <img id="preview" src="" alt="">
+    <div class="projects-section">
+      <div class="label">Ausgewählte Arbeiten:</div>
+      <div class="projects">
+        <a
+          class="project"
+          href="/les-mecs-sportifs.html"
+          data-image="https://freight.cargo.site/t/original/i/X2903072132058560340976237192798/dedeAA017A-2.jpg"
+        >Les Mecs Sportifs</a><span class="sep">, </span><a
+          class="project"
+          href="/jahrring.html"
+          data-image="images/Jahrring/frontpage.png"
+        >Jahrring</a><span class="sep">, </span><a
+          class="project"
+          href="/motel-pool.html"
+          data-image="images/motel-pool/PB_Motel-Pool.jpg"
+        >Motel Pool</a><span class="sep">, </span><a
+          class="project"
+          href="/a24-frames.html"
+          data-image="images/A24 Frames/a24_cover.png"
+        >A24 Frames</a><span class="sep">, </span><a
+          class="project"
+          href="/chinder-buechli.html"
+          data-image="images/chinder-buechli/fuer-wander.png"
+        >Chinder-Büechli</a><span class="sep">, </span><a
+          class="project"
+          href="/herrmann-druck.html"
+          data-image="images/herrmann-druck/cover-mockup.jpg"
+        >Herrmann Druck</a>
       </div>
     </div>
   </div>
 
   <script>
-    // PROJECT PREVIEW PANEL
     const preview = document.getElementById('preview');
-    const projectLinks = document.querySelectorAll('a.project');
 
-    function setPreview(src) {
-      preview.style.opacity = '0';
-      setTimeout(function() {
-        preview.src = src;
-        preview.style.opacity = '1';
-      }, 150);
-    }
-
-    // Show the first project by default so the panel isn't empty on load
-    if (projectLinks.length) {
-      preview.src = projectLinks[0].getAttribute('data-image');
-    }
-
-    projectLinks.forEach(function(link) {
-      link.addEventListener('mouseenter', function() {
-        const img = this.getAttribute('data-image');
-        if (img) setPreview(img);
-      });
+    document.addEventListener('mousemove', function(e) {
+      preview.style.left = (e.clientX - preview.offsetWidth / 2) + 'px';
+      preview.style.top  = (e.clientY - preview.offsetHeight - 20) + 'px';
     });
 
     // INFO POPUP
@@ -378,6 +337,19 @@
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    document.querySelectorAll('a.project').forEach(function(link) {
+      link.addEventListener('mouseenter', function() {
+        const img = this.getAttribute('data-image');
+        if (img) {
+          preview.src = img;
+          preview.style.opacity = '1';
+        }
+      });
+      link.addEventListener('mouseleave', function() {
+        preview.style.opacity = '0';
+      });
+    });
   </script>
 
 </body>
