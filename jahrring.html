@@ -126,7 +126,7 @@
       font-weight: 400;
       line-height: 1.5;
       letter-spacing: -0.01em;
-      max-width: 60ch;
+      max-width: 100%;
     }
 
     /* --- BESCHREIBUNG --- */
@@ -143,39 +143,32 @@
       line-height: 1.5;
       letter-spacing: -0.01em;
       color: var(--black);
-      max-width: 42ch;
+      max-width: 100%;
     }
 
     /* --- META --- */
     .meta {
       display: flex;
       flex-direction: column;
+      gap: 1.75rem;
     }
 
     .meta-row {
       display: flex;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 0.9rem 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    .meta-row:last-child {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      flex-direction: column;
+      gap: 0.35rem;
     }
 
     .meta-label {
       font-size: 0.95rem;
       font-weight: 400;
       color: var(--black-mid);
-      white-space: nowrap;
     }
 
     .meta-value {
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       font-weight: 500;
       color: var(--black);
-      text-align: right;
     }
 
     /* --- BACK --- */
@@ -257,24 +250,20 @@
   <!-- BESCHREIBUNG -->
   <div class="description">
     <p class="desc-text">
-      Ein Buch, von A bis Z während meiner Ausbildung gestaltet — volle kreative Freiheit, jede Entscheidung meine eigene.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
     </p>
     <div class="meta">
       <div class="meta-row">
         <span class="meta-label">Kunde</span>
-        <span class="meta-value">Eigenprojekt</span>
+        <span class="meta-value">rubmedia AG</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Leistungen</span>
-        <span class="meta-value">Editorial Design, Layout, Druckvorstufe</span>
+        <span class="meta-value">Editorial Design, Bildbearbeitung, Druckvorstufe</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Jahr</span>
-        <span class="meta-value">2024</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Zusammenarbeit</span>
-        <span class="meta-value">Solo</span>
+        <span class="meta-value">2019</span>
       </div>
     </div>
   </div>
