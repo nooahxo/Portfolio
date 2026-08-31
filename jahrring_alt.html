@@ -84,56 +84,49 @@
       outline: none;
     }
 
-    /* --- SCROLL TITLE (fixed, fades out while scrolling) --- */
-    .scroll-title {
-      position: fixed;
-      left: 1.75rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #E8321B;
-      z-index: 500;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
-    .scroll-title.hidden {
-      opacity: 0;
-      transition: opacity 0.15s ease;
-    }
-
-    /* --- HERO (Bild + Textbox) --- */
-    .hero-image img {
-      width: 100%;
+    .img-row.first img {
       height: calc(100vh - 4rem); /* wird per JS präzise gesetzt */
-      object-fit: cover;
-      display: block;
-      cursor: zoom-in;
     }
 
-    .hero-caption {
+    /* --- MARQUEE --- */
+    .marquee-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0.3rem 0;
       background: #111;
-      padding: 1.5rem 1.75rem;
     }
 
-    .hero-caption p {
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 22s linear infinite;
+    }
+
+    .marquee-track span {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-style: normal;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
       color: #fff;
-      font-size: 1.1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-      max-width: 60ch;
+      padding-right: 1rem;
+    }
+
+    .marquee-track .dot {
+      font-style: normal;
+      color: rgba(255,255,255,0.4);
+      padding-right: 1rem;
+      font-size: 0.6em;
+      vertical-align: middle;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
     }
 
     /* --- BESCHREIBUNG --- */
     .description {
-      display: grid;
-      grid-template-columns: 1.6fr 1fr;
-      gap: 4rem;
       padding: 3rem 1.75rem 6rem;
       border-top: 1.5px solid var(--black);
     }
@@ -143,39 +136,6 @@
       line-height: 1.5;
       letter-spacing: -0.01em;
       color: var(--black);
-      max-width: 42ch;
-    }
-
-    /* --- META --- */
-    .meta {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .meta-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding: 0.9rem 0;
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    .meta-row:last-child {
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    .meta-label {
-      font-size: 0.95rem;
-      font-weight: 400;
-      color: var(--black-mid);
-      white-space: nowrap;
-    }
-
-    .meta-value {
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: var(--black);
-      text-align: right;
     }
 
     /* --- BACK --- */
@@ -194,15 +154,10 @@
     @media (max-width: 768px) {
       .img-row { grid-template-columns: 1fr; }
       .img-row img, .img-row video { height: 75vw; }
-      .hero-image img { height: 90vw !important; }
-      .hero-caption p { font-size: 0.95rem; }
-      .scroll-title { display: none; }
-      .description {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 2rem 1.25rem 4rem;
-      }
-      .desc-text { font-size: 1rem; max-width: none; }
+      .img-row.first img { height: 75vw !important; }
+      .marquee-track span { font-size: clamp(1rem, 5vw, 2rem); }
+      .description { padding: 2rem 1.25rem 4rem; }
+      .desc-text { font-size: 1rem; }
     }
 
     /* --- LIGHTBOX --- */
@@ -233,19 +188,36 @@
     <nav>
       <a href="/archive.html">Archiv</a>
       <a href="/shots.html">Shots</a>
-      <a href="#" id="info-btn">Info</a>
+      <a href="#">Info</a>
     </nav>
   </header>
 
-  <!-- SCROLL TITLE -->
-  <div class="scroll-title" id="scroll-title">Jahrring</div>
-
-  <!-- HERO: BILD + TEXTBOX -->
-  <div class="hero-image">
-    <img src="/images/Jahrring/Cover-breit.png" alt="Jahrring">
+  <!-- BILDER REIHE 1 -->
+  <div class="img-row first">
+    <img src="/images/Jahrring/Cover-breit.png" alt="Les Mecs Sportifs">
+    <img src="/images/Jahrring/Inhalt1.jpg" alt="Les Mecs Sportifs">
   </div>
-  <div class="hero-caption">
-    <p>Ein Buch, von A bis Z während meiner Ausbildung gestaltet — volle kreative Freiheit, jede Entscheidung meine eigene.</p>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+      <span>JAHRRING</span>
+    </div>
   </div>
 
   <!-- BILDER REIHE 2 -->
@@ -259,24 +231,6 @@
     <p class="desc-text">
       Ein Buch, von A bis Z während meiner Ausbildung gestaltet — volle kreative Freiheit, jede Entscheidung meine eigene.
     </p>
-    <div class="meta">
-      <div class="meta-row">
-        <span class="meta-label">Kunde</span>
-        <span class="meta-value">Eigenprojekt</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Leistungen</span>
-        <span class="meta-value">Editorial Design, Layout, Druckvorstufe</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Jahr</span>
-        <span class="meta-value">2024</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Zusammenarbeit</span>
-        <span class="meta-value">Solo</span>
-      </div>
-    </div>
   </div>
 
   <!-- INFO POPUP -->
@@ -297,36 +251,27 @@
     // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    document.querySelectorAll('.img-row img, .hero-image img').forEach(function(img) {
+    document.querySelectorAll('.img-row img').forEach(function(img) {
       img.addEventListener('click', function() { lightboxImg.src = this.src; lightbox.classList.add('open'); });
     });
     lightbox.addEventListener('click', function() { lightbox.classList.remove('open'); lightboxImg.src = ''; });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { lightbox.classList.remove('open'); lightboxImg.src = ''; } });
 
-    // MARQUEE SEAMLESS LOOP entfernt (kein Marquee mehr)
+    // MARQUEE SEAMLESS LOOP
+    var track = document.querySelector('.marquee-track');
+    track.innerHTML += track.innerHTML;
 
     function fixHeight() {
-      var caption = document.querySelector('.hero-caption');
-      var captionH = caption.offsetHeight;
+      var marquee = document.querySelector('.marquee-wrap');
+      var marqueeH = marquee.offsetHeight;
       var viewH = window.innerHeight;
-      var imgH = viewH - captionH;
-      document.querySelectorAll('.hero-image img').forEach(function(img) {
+      var imgH = viewH - marqueeH;
+      document.querySelectorAll('.img-row.first img').forEach(function(img) {
         img.style.height = imgH + 'px';
       });
     }
     fixHeight();
     window.addEventListener('resize', fixHeight);
-
-    // SCROLL TITLE: verschwindet beim Scrollen, erscheint wieder im Stillstand
-    var scrollTitle = document.getElementById('scroll-title');
-    var scrollStopTimer;
-    window.addEventListener('scroll', function() {
-      scrollTitle.classList.add('hidden');
-      clearTimeout(scrollStopTimer);
-      scrollStopTimer = setTimeout(function() {
-        scrollTitle.classList.remove('hidden');
-      }, 200);
-    }, { passive: true });
 
     // INFO POPUP
     const overlay = document.getElementById('info-overlay');
