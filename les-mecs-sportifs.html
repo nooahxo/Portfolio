@@ -5,23 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Les Mecs Sportifs — Noah Bill</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --black: rgba(0, 0, 0, 0.85);
-      --black-mid: rgba(0, 0, 0, 0.5);
-      --white: rgba(255, 255, 255, 0.95);
-      --white-mid: rgba(255, 255, 255, 0.6);
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    body { font-family: 'Outfit', sans-serif; background: #fff; color: var(--black); }
+    :root {
+      --black: #000;
+      --black-mid: rgba(0, 0, 0, 0.5);
+    }
 
+    html, body {
+      height: auto;
+    }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: #000;
+      color: var(--black);
+      padding-bottom: 4.5rem; /* Platz für die fixe Bottom-Bar */
+    }
+
+    /* --- HEADER --- */
     header {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 700;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -31,137 +45,219 @@
 
     .name {
       font-size: 1.1rem;
-      font-weight: 400;
+      font-weight: 500;
       line-height: 1.2;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.025em;
       text-decoration: none;
       color: #fff;
     }
 
-    .name span { display: block; opacity: 0.7; font-weight: 300; }
+    .name span {
+      display: block;
+      font-weight: 400;
+      opacity: 0.7;
+    }
 
-    nav { display: flex; gap: 1.5rem; }
+    nav {
+      display: flex;
+      gap: 1.5rem;
+    }
 
     nav a {
       font-size: 1.1rem;
-      font-weight: 400;
+      font-weight: 500;
       color: #fff;
       text-decoration: none;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.025em;
     }
 
-    .img-row {
+    /* --- GALLERY (vertikal, normaler Seiten-Scroll) --- */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Standard: eine Zeile = ein volles Bild */
+    .gallery-row {
+      width: 100%;
+      background: #000;
+    }
+
+    .gallery-row img,
+    .gallery-row video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Optional: .gallery-row.double = zwei Elemente nebeneinander (z.B. Hochformate/Video) */
+    .gallery-row.double {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6px;
     }
 
-    .img-row img, .img-row video {
+    .gallery-row.double img,
+    .gallery-row.double video {
       width: 100%;
-      height: calc(100vh - 5rem);
+      height: 100%;
       object-fit: cover;
-      display: block;
-      border: none;
-      outline: none;
     }
 
-    .marquee-wrap {
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 0.3rem 0;
-      background: #111;
+    @media (max-width: 768px) {
+      .gallery-row.double {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .marquee-track {
-      display: inline-block;
-      animation: marquee 22s linear infinite;
+    /* --- BOTTOM BAR --- */
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 700;
     }
 
-    .marquee-track span {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-size: clamp(1.2rem, 2.5vw, 2rem);
-      letter-spacing: -0.02em;
+    .bar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 1.75rem;
+      mix-blend-mode: difference;
+    }
+
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .bar-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .bar-project {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
       text-transform: uppercase;
       color: #fff;
-      padding-right: 1rem;
     }
 
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .description {
-      padding: 3rem 1.75rem 6rem;
-      border-top: 1.5px solid var(--black);
-    }
-
-    .desc-text {
-      font-size: 1.35rem;
-      line-height: 1.5;
+    .bar-info-btn {
+      background: none;
+      border: none;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
       letter-spacing: -0.01em;
-      color: var(--black);
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
     }
 
-    /* --- INFO POPUP --- */
-    #info-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.35); z-index: 10000; backdrop-filter: blur(4px);
+    .bar-count {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
     }
+
+    .info-panel {
+      max-height: 0;
+      overflow: hidden;
+      background: #d2d2d2;
+      transition: max-height 0.4s ease;
+    }
+
+    .info-panel.open {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .info-panel-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 1.5rem 1.75rem 2rem;
+    }
+
+    .info-desc {
+      flex: 1;
+      max-width: 60%;
+      color: #000;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .info-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .meta-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #000;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #000;
+    }
+
+    /* --- INFO POPUP (Site-Info, separat von der Projekt-Info-Bar) --- */
+    #info-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 10000; backdrop-filter: blur(4px); }
     #info-overlay.open { display: flex; align-items: center; justify-content: center; }
     #info-popup { background: #111; padding: 2.5rem; width: 420px; max-width: 90vw; position: relative; border-radius: 18px; }
-    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Outfit', sans-serif; line-height: 1; }
+    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Instrument Sans', sans-serif; line-height: 1; }
     #info-close:hover { color: #fff; }
-    .info-time { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; letter-spacing: 0.05em; }
-    .info-name { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 1rem; color: #fff; }
-    .info-bio { font-size: 0.95rem; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
-    .info-email { font-size: 0.95rem; font-weight: 400; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 1px; }
+    .info-time { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+    .info-name { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+    .info-bio { font-size: 0.95rem; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+    .info-email { font-size: 0.95rem; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
 
     /* --- MOBILE --- */
     @media (max-width: 768px) {
-      .img-row { grid-template-columns: 1fr; }
-      .img-row img, .img-row video { height: 75vw; }
-      .img-row.first img { height: 75vw !important; }
-      .marquee-track span { font-size: clamp(1rem, 5vw, 2rem); }
-      .description { padding: 2rem 1.25rem 4rem; }
-      .desc-text { font-size: 1rem; }
+      .name { font-size: 0.95rem; }
+      nav { gap: 1rem; }
+      nav a { font-size: 0.95rem; }
+      .bar-row { padding: 1rem 1.25rem; }
+      .bar-project, .bar-info-btn, .bar-count { font-size: 0.9rem; }
+      .info-panel-inner {
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.25rem 1.25rem 1.75rem;
+      }
+      .info-desc { font-size: 0.9rem; max-width: 100%; }
     }
-
-    /* --- LIGHTBOX --- */
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.95);
-      z-index: 20000;
-      align-items: center;
-      justify-content: center;
-      cursor: zoom-out;
-    }
-    #lightbox.open { display: flex; }
-    #lightbox img {
-      max-width: 95vw;
-      max-height: 95vh;
-      object-fit: contain;
-      border-radius: 4px;
-    }
-    .img-row img { cursor: zoom-in; }
   </style>
 </head>
 <body>
 
-  <!-- INFO POPUP -->
-  <div id="info-overlay">
-    <div id="info-popup">
-      <button id="info-close">×</button>
-      <div class="info-time" id="info-clock"></div>
-      <div class="info-name">Noah Bill</div>
-      <p class="info-bio">Graphic designer and visual communicator based in Switzerland. Currently studying Visuelle Gestaltung and working on projects that sit at the intersection of type, image and concept.</p>
-      <a class="info-email" href="mailto:hallo@noahbill.ch">hallo@noahbill.ch</a>
-    </div>
-  </div>
-
+  <!-- HEADER -->
   <header>
     <a class="name" href="/index.html">
       Noah Bill<br>
@@ -174,100 +270,99 @@
     </nav>
   </header>
 
-  <!-- BILDER REIHE 1 -->
-  <div class="img-row first">
-    <img src="/images/les-mecs-sportifs/dede-shooting.jpg" alt="Les Mecs Sportifs">
-    <img src="/images/les-mecs-sportifs/trikot-closeup.jpeg" alt="Les Mecs Sportifs">
-  </div>
+  <!-- GALLERY -->
+  <div class="gallery" id="gallery">
+    <div class="gallery-row"><img src="/images/les-mecs-sportifs/dede-shooting.jpg" alt="Les Mecs Sportifs — Shooting"></div>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>LES MECS SPORTIFS</span>
-      <span>LES MECS SPORTIFS</span>
-      <span>LES MECS SPORTIFS</span>
-      <span>LES MECS SPORTIFS</span>
-      <span>LES MECS SPORTIFS</span>
-      <span>LES MECS SPORTIFS</span>
+    <!-- Hochformat-Bild + Video nebeneinander -->
+    <div class="gallery-row double">
+      <img src="/images/les-mecs-sportifs/trikot-closeup.jpeg" alt="Les Mecs Sportifs — Trikot Closeup">
+      <video src="/images/les-mecs-sportifs/trikot-video.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+    <div class="gallery-row"><img src="/images/les-mecs-sportifs/dede-shooting1.jpg" alt="Les Mecs Sportifs — Shooting"></div>
+
+    <!-- Hochformat-Handybild + Logo-GIF nebeneinander -->
+    <div class="gallery-row double">
+      <img src="/images/les-mecs-sportifs/handybild_insta.jpeg" alt="Les Mecs Sportifs — Instagram">
+      <img src="/images/les-mecs-sportifs/spinning-logo.gif" alt="Les Mecs Sportifs — Logo">
     </div>
   </div>
 
-  <!-- BILDER REIHE 2 -->
-  <div class="img-row">
-    <video src="/images/les-mecs-sportifs/trikot-video.mp4" autoplay muted loop playsinline style="width:100%;height:calc(100vh - 5rem);object-fit:cover;display:block;"></video>
-    <img src="/images/les-mecs-sportifs/dede-shooting1.jpg" alt="Les Mecs Sportifs">
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bar-row">
+      <div class="bar-left">
+        <span class="bar-badge">1</span>
+        <span class="bar-project">Les Mecs Sportifs</span>
+        <button class="bar-info-btn" id="info-toggle">+ Info</button>
+      </div>
+      <span class="bar-count" id="gallery-count">[1/4]</span>
+    </div>
+
+    <div class="info-panel" id="info-panel">
+      <div class="info-panel-inner">
+        <p class="info-desc">Ein fortlaufendes Designprojekt für Les Mecs Sportifs, ein Fussballteam aus Kindheitsfreunden das in der Alternativliga in Bern spielt. Als Spieler und Designer des Teams bin ich verantwortlich für die visuelle Identität, von Trikots bis zu Grafiken.</p>
+
+        <div class="info-meta">
+          <div class="meta-row">
+            <span class="meta-label">Kunde:</span>
+            <span class="meta-value">Les Mecs Sportifs</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Leistungen:</span>
+            <span class="meta-value">Corporate Identity</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Jahr:</span>
+            <span class="meta-value">2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- BILDER REIHE 3 -->
-  <div class="img-row">
-    <img src="/images/les-mecs-sportifs/handybild_insta.jpeg" alt="Les Mecs Sportifs">
-    <img src="/images/les-mecs-sportifs/spinning-logo.gif" alt="Les Mecs Sportifs">
-  </div>
-
-  <!-- BESCHREIBUNG -->
-  <div class="description">
-    <p class="desc-text">
-      Ein fortlaufendes Designprojekt für Les Mecs Sportifs, ein Fussballteam aus Kindheitsfreunden das in der Alternativliga in Bern spielt. Als Spieler und Designer des Teams bin ich verantwortlich für die visuelle Identität, von Trikots bis zu Grafiken.
-    </p>
-  </div>
-
-  <!-- LIGHTBOX -->
-  <div id="lightbox">
-    <img id="lightbox-img" src="" alt="">
+  <!-- INFO POPUP (Site-Info) -->
+  <div id="info-overlay">
+    <div id="info-popup">
+      <button id="info-close">×</button>
+      <div class="info-time" id="info-clock"></div>
+      <div class="info-name">Noah Bill</div>
+      <p class="info-bio">Graphic designer and visual communicator based in Switzerland. Currently studying Visuelle Gestaltung and working on projects that sit at the intersection of type, image and concept.</p>
+      <a class="info-email" href="mailto:hallo@noahbill.ch">hallo@noahbill.ch</a>
+    </div>
   </div>
 
   <script>
-    // LIGHTBOX
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
+    // GALLERY: Zähler anhand der Scrollposition der Zeilen ermitteln
+    const slides = document.querySelectorAll('.gallery-row');
+    const countEl = document.getElementById('gallery-count');
 
-    document.querySelectorAll('.img-row img').forEach(function(img) {
-      img.addEventListener('click', function() {
-        lightboxImg.src = this.src;
-        lightbox.classList.add('open');
+    function updateCount() {
+      const mid = window.scrollY + window.innerHeight / 2;
+      let index = 0;
+      slides.forEach(function(slide, i) {
+        if (slide.offsetTop <= mid) index = i;
       });
-    });
-
-    lightbox.addEventListener('click', function() {
-      lightbox.classList.remove('open');
-      lightboxImg.src = '';
-    });
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        lightbox.classList.remove('open');
-        lightboxImg.src = '';
-      }
-    });
-
-    // MARQUEE SEAMLESS LOOP
-    var track = document.querySelector('.marquee-track');
-    track.innerHTML += track.innerHTML;
-
-    function fixHeight() {
-      var marquee = document.querySelector('.marquee-wrap');
-      var marqueeH = marquee.offsetHeight;
-      var viewH = window.innerHeight;
-      var imgH = viewH - marqueeH;
-      document.querySelectorAll('.img-row.first img').forEach(function(img) {
-        img.style.height = imgH + 'px';
-      });
+      countEl.textContent = '[' + (index + 1) + '/' + slides.length + ']';
     }
-    fixHeight();
-    window.addEventListener('resize', fixHeight);
+    window.addEventListener('scroll', updateCount, { passive: true });
+    window.addEventListener('resize', updateCount);
+    updateCount();
 
-    // INFO POPUP
+    // INFO-BAR (Projektbeschreibung) auf-/zuklappen
+    const infoToggle = document.getElementById('info-toggle');
+    const infoPanel = document.getElementById('info-panel');
+    infoToggle.addEventListener('click', function() {
+      const isOpen = infoPanel.classList.toggle('open');
+      infoToggle.textContent = isOpen ? '− Info' : '+ Info';
+    });
+
+    // SITE-INFO POPUP
     const overlay = document.getElementById('info-overlay');
-    document.getElementById('info-btn').addEventListener('click', function(e) {
-      e.preventDefault();
-      overlay.classList.add('open');
-    });
-    document.getElementById('info-close').addEventListener('click', function() {
-      overlay.classList.remove('open');
-    });
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) overlay.classList.remove('open');
-    });
+    document.getElementById('info-btn').addEventListener('click', function(e) { e.preventDefault(); overlay.classList.add('open'); });
+    document.getElementById('info-close').addEventListener('click', function() { overlay.classList.remove('open'); });
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
     function updateClock() {
       const now = new Date();
       const time = now.toLocaleTimeString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', second: '2-digit' });
