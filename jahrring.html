@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jahrring — Noah Bill</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
 
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,25 +14,28 @@
     }
 
     :root {
-      --black: rgba(0, 0, 0, 0.85);
+      --black: #000;
       --black-mid: rgba(0, 0, 0, 0.5);
-      --white: rgba(255, 255, 255, 0.95);
-      --white-mid: rgba(255, 255, 255, 0.6);
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
-      background: #fff;
+      font-family: 'Instrument Sans', sans-serif;
+      background: #000;
       color: var(--black);
     }
 
-    /* --- HEADER über dem Bild --- */
+    /* --- HEADER --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 100;
+      z-index: 700;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -42,9 +45,9 @@
 
     .name {
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 500;
       line-height: 1.2;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       text-decoration: none;
       color: #fff;
     }
@@ -65,159 +68,192 @@
       font-weight: 500;
       color: #fff;
       text-decoration: none;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
-    /* --- BILDER REIHE --- */
-    .img-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-    }
-
-    .img-row img, .img-row video {
-      width: 100%;
-      height: calc(100vh - 5rem);
-      object-fit: cover;
-      display: block;
-      border: none;
-      outline: none;
-    }
-
-    /* --- SCROLL TITLE (fixed, fades out while scrolling) --- */
-    .scroll-title {
+    /* --- GALLERY (horizontal, wheel-driven) --- */
+    .gallery {
       position: fixed;
-      left: 1.75rem;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 1.1rem;
-      font-weight: 300;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #E8321B;
-      z-index: 500;
-      opacity: 1;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
+      inset: 0;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      background: #000;
     }
 
-    .scroll-title.hidden {
-      opacity: 0;
-      transition: opacity 0.15s ease;
+    .gallery::-webkit-scrollbar {
+      display: none;
     }
 
-    /* --- HERO (Bild + Textbox) --- */
-    .hero-image img {
-      width: 100%;
-      height: calc(100vh - 4rem); /* wird per JS präzise gesetzt */
-      object-fit: cover;
-      display: block;
-      cursor: zoom-in;
+    .gallery-slide {
+      flex: 0 0 100vw;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      scroll-snap-align: start;
     }
 
-    .hero-caption {
-      background: #111;
-      padding: 1.5rem 1.75rem;
-    }
-
-    .hero-caption p {
-      color: #fff;
-      font-size: 1.1rem;
-      font-weight: 400;
-      line-height: 1.5;
-      letter-spacing: -0.01em;
+    .gallery-slide img {
       max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
     }
 
-    /* --- BESCHREIBUNG --- */
-    .description {
+    /* --- BOTTOM BAR --- */
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 700;
+    }
+
+    .bar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 1.75rem;
+      background: #fff;
+      border-top: 1.5px solid #000;
+    }
+
+    .bar-project {
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      color: var(--black);
+    }
+
+    .bar-info-btn {
+      background: none;
+      border: none;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--black);
+      cursor: pointer;
+      letter-spacing: -0.025em;
+    }
+
+    .bar-info-btn:hover {
+      color: var(--black-mid);
+    }
+
+    .bar-count {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--black-mid);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .info-panel {
+      max-height: 0;
+      overflow: hidden;
+      background: #111;
+      transition: max-height 0.4s ease;
+    }
+
+    .info-panel.open {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .info-panel-inner {
       display: grid;
       grid-template-columns: 1.6fr 1fr;
-      gap: 4rem;
-      padding: 3rem 1.75rem 6rem;
-      border-top: 1.5px solid var(--black);
+      gap: 3rem;
+      padding: 2.5rem 1.75rem;
     }
 
-    .desc-text {
-      font-size: 1.35rem;
-      line-height: 1.5;
+    .info-desc {
+      color: #fff;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.55;
       letter-spacing: -0.01em;
-      color: var(--black);
-      max-width: 100%;
     }
 
-    /* --- META --- */
-    .meta {
+    .info-meta {
       display: flex;
       flex-direction: column;
-      gap: 1.75rem;
+      gap: 1.5rem;
     }
 
     .meta-row {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
+      gap: 0.3rem;
     }
 
     .meta-label {
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 400;
-      color: var(--black-mid);
+      color: rgba(255, 255, 255, 0.5);
     }
 
     .meta-value {
-      font-size: 1.1rem;
-      font-weight: 500;
-      color: var(--black);
-    }
-
-    /* --- BACK --- */
-    .back {
-      display: inline-block;
-      padding: 0 1.75rem 3rem;
       font-size: 1rem;
       font-weight: 500;
-      color: var(--black-mid);
+      color: #fff;
+    }
+
+    .info-project-nav {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .info-project-nav a {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
       text-decoration: none;
     }
 
-    .back:hover { color: var(--black); }
-
-    /* --- MOBILE --- */
-    @media (max-width: 768px) {
-      .img-row { grid-template-columns: 1fr; }
-      .img-row img, .img-row video { height: 75vw; }
-      .hero-image img { height: 90vw !important; }
-      .hero-caption p { font-size: 0.95rem; }
-      .scroll-title { display: none; }
-      .description {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        padding: 2rem 1.25rem 4rem;
-      }
-      .desc-text { font-size: 1rem; max-width: none; }
+    .info-project-nav a:hover {
+      color: rgba(255, 255, 255, 0.6);
     }
 
-    /* --- LIGHTBOX --- */
-    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; align-items: center; justify-content: center; cursor: zoom-out; }
-    #lightbox.open { display: flex; }
-    #lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 4px; }
-    .img-row img { cursor: zoom-in; }
-
-    /* --- INFO POPUP --- */
+    /* --- INFO POPUP (Site-Info, separat von der Projekt-Info-Bar) --- */
     #info-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 10000; backdrop-filter: blur(4px); }
     #info-overlay.open { display: flex; align-items: center; justify-content: center; }
     #info-popup { background: #111; padding: 2.5rem; width: 420px; max-width: 90vw; position: relative; border-radius: 18px; }
-    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Outfit', sans-serif; line-height: 1; }
-    .info-time { font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Instrument Sans', sans-serif; line-height: 1; }
+    #info-close:hover { color: #fff; }
+    .info-time { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
     .info-name { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
-    .info-bio { font-size: 0.95rem; font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+    .info-bio { font-size: 0.95rem; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
     .info-email { font-size: 0.95rem; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      .name { font-size: 0.95rem; }
+      nav { gap: 1rem; }
+      nav a { font-size: 0.95rem; }
+      .bar-row { padding: 1rem 1.25rem; }
+      .bar-project, .bar-info-btn, .bar-count { font-size: 0.9rem; }
+      .info-panel-inner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.75rem 1.25rem;
+      }
+      .info-desc { font-size: 1rem; }
+      .info-project-nav { flex-direction: column; gap: 0.75rem; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- HEADER über Bild -->
+  <!-- HEADER -->
   <header>
     <a class="name" href="/index.html">
       Noah Bill<br>
@@ -230,45 +266,50 @@
     </nav>
   </header>
 
-  <!-- SCROLL TITLE -->
-  <div class="scroll-title" id="scroll-title">Jahrring</div>
-
-  <!-- HERO: BILD + TEXTBOX -->
-  <div class="hero-image">
-    <img src="/images/Jahrring/Cover-breit.png" alt="Jahrring">
-  </div>
-  <div class="hero-caption">
-    <p>Im Rahmen meiner Ausbildung durfte ich ein Buchprojekt von Grund auf selbstständig konzipieren und umsetzen. Dabei lag die gestalterische Entscheidungsfreiheit vollständig bei mir – von der Wahl des Papiers über das Format und die Typografie bis hin zur gesamten Gestaltung und Produktion.</p>
+  <!-- GALLERY -->
+  <div class="gallery" id="gallery">
+    <div class="gallery-slide"><img src="/images/Jahrring/Cover-breit.png" alt="Jahrring — Cover"></div>
+    <div class="gallery-slide"><img src="/images/Jahrring/Inhalt1.jpg" alt="Jahrring — Inhalt 1"></div>
+    <div class="gallery-slide"><img src="/images/Jahrring/Inhalt2.jpg" alt="Jahrring — Inhalt 2"></div>
+    <div class="gallery-slide"><img src="/images/Jahrring/Inhalt3.jpg" alt="Jahrring — Inhalt 3"></div>
   </div>
 
-  <!-- BILDER REIHE 2 -->
-  <div class="img-row">
-    <img src="/images/Jahrring/Inhalt2.jpg" alt="Jahrring">
-    <img src="/images/Jahrring/Inhalt3.jpg" alt="Jahrring">
-  </div>
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bar-row">
+      <span class="bar-project">Jahrring</span>
+      <button class="bar-info-btn" id="info-toggle">+ Info</button>
+      <span class="bar-count" id="gallery-count">[1/4]</span>
+    </div>
 
-  <!-- BESCHREIBUNG -->
-  <div class="description">
-    <p class="desc-text">
-      Das Projekt gab mir die Möglichkeit, den gesamten Entstehungsprozess eines Buches kennenzulernen und meine eigenen Ideen konsequent von der ersten Konzeption bis zum fertigen Endprodukt umzusetzen.
-    </p>
-    <div class="meta">
-      <div class="meta-row">
-        <span class="meta-label">Kunde</span>
-        <span class="meta-value">rubmedia AG</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Leistungen</span>
-        <span class="meta-value">Editorial Design, Bildbearbeitung, Druckvorstufe</span>
-      </div>
-      <div class="meta-row">
-        <span class="meta-label">Jahr</span>
-        <span class="meta-value">2019</span>
+    <div class="info-panel" id="info-panel">
+      <div class="info-panel-inner">
+        <p class="info-desc">Im Rahmen meiner Ausbildung durfte ich ein Buchprojekt von Grund auf selbstständig konzipieren und umsetzen. Dabei lag die gestalterische Entscheidungsfreiheit vollständig bei mir – von der Wahl des Papiers über das Format und die Typografie bis hin zur gesamten Gestaltung und Produktion.</p>
+
+        <div class="info-meta">
+          <div class="meta-row">
+            <span class="meta-label">Kunde</span>
+            <span class="meta-value">rubmedia AG</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Leistungen</span>
+            <span class="meta-value">Editorial Design, Bildbearbeitung, Druckvorstufe</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Jahr</span>
+            <span class="meta-value">2019</span>
+          </div>
+        </div>
+
+        <div class="info-project-nav">
+          <a href="/les-mecs-sportifs.html">← Vorheriges Projekt</a>
+          <a href="/motel-pool.html">Nächstes Projekt →</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- INFO POPUP -->
+  <!-- INFO POPUP (Site-Info) -->
   <div id="info-overlay">
     <div id="info-popup">
       <button id="info-close">×</button>
@@ -279,45 +320,37 @@
     </div>
   </div>
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
-
   <script>
-    // LIGHTBOX
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    document.querySelectorAll('.img-row img, .hero-image img').forEach(function(img) {
-      img.addEventListener('click', function() { lightboxImg.src = this.src; lightbox.classList.add('open'); });
-    });
-    lightbox.addEventListener('click', function() { lightbox.classList.remove('open'); lightboxImg.src = ''; });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { lightbox.classList.remove('open'); lightboxImg.src = ''; } });
+    // GALLERY: Mausrad (vertikal) treibt horizontales Scrollen
+    const gallery = document.getElementById('gallery');
+    const slides = document.querySelectorAll('.gallery-slide');
+    const countEl = document.getElementById('gallery-count');
 
-    // MARQUEE SEAMLESS LOOP entfernt (kein Marquee mehr)
+    gallery.addEventListener('wheel', function(e) {
+      // Wenn die Geste eher vertikal ist (normales Mausrad), in horizontales Scrollen umwandeln.
+      // Trackpad-Nutzer, die bereits horizontal wischen (deltaX), lassen wir nativ scrollen.
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        gallery.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
 
-    function fixHeight() {
-      var caption = document.querySelector('.hero-caption');
-      var captionH = caption.offsetHeight;
-      var viewH = window.innerHeight;
-      var imgH = viewH - captionH;
-      document.querySelectorAll('.hero-image img').forEach(function(img) {
-        img.style.height = imgH + 'px';
-      });
+    function updateCount() {
+      const index = Math.round(gallery.scrollLeft / gallery.clientWidth) + 1;
+      countEl.textContent = '[' + Math.min(index, slides.length) + '/' + slides.length + ']';
     }
-    fixHeight();
-    window.addEventListener('resize', fixHeight);
+    gallery.addEventListener('scroll', updateCount);
+    updateCount();
 
-    // SCROLL TITLE: verschwindet beim Scrollen, erscheint wieder im Stillstand
-    var scrollTitle = document.getElementById('scroll-title');
-    var scrollStopTimer;
-    window.addEventListener('scroll', function() {
-      scrollTitle.classList.add('hidden');
-      clearTimeout(scrollStopTimer);
-      scrollStopTimer = setTimeout(function() {
-        scrollTitle.classList.remove('hidden');
-      }, 200);
-    }, { passive: true });
+    // INFO-BAR (Projektbeschreibung) auf-/zuklappen
+    const infoToggle = document.getElementById('info-toggle');
+    const infoPanel = document.getElementById('info-panel');
+    infoToggle.addEventListener('click', function() {
+      const isOpen = infoPanel.classList.toggle('open');
+      infoToggle.textContent = isOpen ? '− Info' : '+ Info';
+    });
 
-    // INFO POPUP
+    // SITE-INFO POPUP
     const overlay = document.getElementById('info-overlay');
     document.getElementById('info-btn').addEventListener('click', function(e) { e.preventDefault(); overlay.classList.add('open'); });
     document.getElementById('info-close').addEventListener('click', function() { overlay.classList.remove('open'); });
