@@ -13,7 +13,7 @@
   <meta name="twitter:title" content="Noah Bill">
   <meta name="twitter:description" content="Visual Archiv">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
 
     *, *::before, *::after {
       box-sizing: border-box;
@@ -32,7 +32,7 @@
     }
 
     body {
-      font-family: 'Rubik', sans-serif;
+      font-family: 'Outfit', sans-serif;
       background: #fff;
       color: var(--black);
       cursor: default;
@@ -42,6 +42,7 @@
     .site {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       min-height: 100vh;
       padding: 1.5rem 1.75rem;
     }
@@ -85,7 +86,7 @@
 
     /* --- PROJECTS --- */
     .projects-section {
-      padding-top: 1rem;
+      padding-bottom: 0.25rem;
     }
 
     .label {
@@ -93,24 +94,20 @@
       font-weight: 400;
       color: var(--black);
       letter-spacing: -0.01em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.35rem;
     }
 
     .projects {
-      display: flex;
-      flex-direction: column;
+      font-size: clamp(2.2rem, 5vw, 3.75rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
     }
 
     .projects a {
-      display: flex;
-      align-items: center;
-      height: 33.334vh;
-      font-size: clamp(3rem, 9vw, 7.5rem);
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: -0.02em;
       color: var(--black);
       text-decoration: none;
+      display: inline;
       transition: color 0.15s ease;
       cursor: pointer;
     }
@@ -119,7 +116,12 @@
       color: var(--black-light);
     }
 
-    /* --- PREVIEW IMAGE (follows cursor) --- */
+    .projects .sep {
+      color: var(--black);
+      font-weight: 400;
+    }
+
+    /* --- PREVIEW IMAGE --- */
     #preview {
       position: fixed;
       pointer-events: none;
@@ -166,7 +168,7 @@
       font-size: 1.5rem;
       cursor: pointer;
       color: rgba(255,255,255,0.4);
-      font-family: 'Rubik', sans-serif;
+      font-family: 'Outfit', sans-serif;
       line-height: 1;
     }
 
@@ -234,10 +236,9 @@
         font-size: 0.95rem;
       }
 
-      .projects a {
-        height: 33.334vh;
-        font-size: clamp(1.8rem, 9vw, 3rem);
-        line-height: 1;
+      .projects {
+        font-size: clamp(1.8rem, 8vw, 2.8rem);
+        line-height: 1.1;
       }
     }
   </style>
@@ -277,28 +278,23 @@
           class="project"
           href="/les-mecs-sportifs.html"
           data-image="https://freight.cargo.site/t/original/i/X2903072132058560340976237192798/dedeAA017A-2.jpg"
-        >Les Mecs Sportifs</a>
-        <a
+        >Les Mecs Sportifs</a><span class="sep">, </span><a
           class="project"
           href="/jahrring.html"
           data-image="images/Jahrring/frontpage.png"
-        >Jahrring</a>
-        <a
+        >Jahrring</a><span class="sep">, </span><a
           class="project"
           href="/motel-pool.html"
           data-image="images/motel-pool/PB_Motel-Pool.jpg"
-        >Motel Pool</a>
-        <a
+        >Motel Pool</a><span class="sep">, </span><a
           class="project"
           href="/a24-frames.html"
           data-image="images/A24 Frames/a24_cover.png"
-        >A24 Frames</a>
-        <a
+        >A24 Frames</a><span class="sep">, </span><a
           class="project"
           href="/chinder-buechli.html"
           data-image="images/chinder-buechli/fuer-wander.png"
-        >Chinder-Büechli</a>
-        <a
+        >Chinder-Büechli</a><span class="sep">, </span><a
           class="project"
           href="/herrmann-druck.html"
           data-image="images/herrmann-druck/cover-mockup.jpg"
@@ -308,25 +304,11 @@
   </div>
 
   <script>
-    // PROJECT PREVIEW (follows cursor)
     const preview = document.getElementById('preview');
 
     document.addEventListener('mousemove', function(e) {
       preview.style.left = (e.clientX - preview.offsetWidth / 2) + 'px';
       preview.style.top  = (e.clientY - preview.offsetHeight - 20) + 'px';
-    });
-
-    document.querySelectorAll('a.project').forEach(function(link) {
-      link.addEventListener('mouseenter', function() {
-        const img = this.getAttribute('data-image');
-        if (img) {
-          preview.src = img;
-          preview.style.opacity = '1';
-        }
-      });
-      link.addEventListener('mouseleave', function() {
-        preview.style.opacity = '0';
-      });
     });
 
     // INFO POPUP
@@ -355,6 +337,19 @@
     }
     updateClock();
     setInterval(updateClock, 1000);
+
+    document.querySelectorAll('a.project').forEach(function(link) {
+      link.addEventListener('mouseenter', function() {
+        const img = this.getAttribute('data-image');
+        if (img) {
+          preview.src = img;
+          preview.style.opacity = '1';
+        }
+      });
+      link.addEventListener('mouseleave', function() {
+        preview.style.opacity = '0';
+      });
+    });
   </script>
 
 </body>
