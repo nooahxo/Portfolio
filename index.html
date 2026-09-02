@@ -112,9 +112,7 @@
       cursor: pointer;
     }
 
-    .projects a:hover {
-      color: var(--black-light);
-    }
+    /* Hover-Farbe wird per JS zufällig gesetzt, siehe Script unten */
 
     .projects .sep {
       color: var(--black);
@@ -309,6 +307,18 @@
     document.addEventListener('mousemove', function(e) {
       preview.style.left = (e.clientX - preview.offsetWidth / 2) + 'px';
       preview.style.top  = (e.clientY - preview.offsetHeight - 20) + 'px';
+    });
+
+    // ZUFÄLLIGE HOVER-FARBE
+    const hoverColors = ['#E8321B', '#1D4ED8', '#059669', '#D97706', '#7C3AED', '#DB2777', '#0EA5E9'];
+    document.querySelectorAll('a.project').forEach(function(link) {
+      link.addEventListener('mouseenter', function() {
+        const color = hoverColors[Math.floor(Math.random() * hoverColors.length)];
+        this.style.color = color;
+      });
+      link.addEventListener('mouseleave', function() {
+        this.style.color = '';
+      });
     });
 
     // INFO POPUP
