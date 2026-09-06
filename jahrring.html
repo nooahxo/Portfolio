@@ -175,6 +175,21 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .bar-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .bar-nav a {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+    }
+
+
     .info-panel {
       max-height: 0;
       overflow: hidden;
@@ -247,7 +262,7 @@
       nav { gap: 1rem; }
       nav a { font-size: 0.95rem; }
       .bar-row { padding: 1rem 1.25rem; }
-      .bar-project, .bar-info-btn, .bar-count { font-size: 0.9rem; }
+      .bar-project, .bar-info-btn, .bar-nav a { font-size: 0.9rem; }
       .info-panel-inner {
         flex-direction: column;
         gap: 1.25rem;
@@ -288,7 +303,10 @@
         <span class="bar-project">Jahrring</span>
         <button class="bar-info-btn" id="info-toggle">+ Info</button>
       </div>
-      <span class="bar-count" id="gallery-count">[1/4]</span>
+      <div class="bar-nav">
+        <a href="/les-mecs-sportifs.html">Vorheriges Projekt</a>
+        <a href="/motel-pool.html">Nächstes Projekt</a>
+      </div>
     </div>
 
     <div class="info-panel" id="info-panel">
@@ -325,21 +343,7 @@
   </div>
 
   <script>
-    // GALLERY: Zähler anhand der Scrollposition der Bilder ermitteln
-    const slides = document.querySelectorAll('.gallery-row');
-    const countEl = document.getElementById('gallery-count');
-
-    function updateCount() {
-      const mid = window.scrollY + window.innerHeight / 2;
-      let index = 0;
-      slides.forEach(function(slide, i) {
-        if (slide.offsetTop <= mid) index = i;
-      });
-      countEl.textContent = '[' + (index + 1) + '/' + slides.length + ']';
-    }
-    window.addEventListener('scroll', updateCount, { passive: true });
-    window.addEventListener('resize', updateCount);
-    updateCount();
+    // (Bildzähler entfernt zugunsten von Vorheriges/Nächstes Projekt)
 
     // INFO-BAR (Projektbeschreibung) auf-/zuklappen
     const infoToggle = document.getElementById('info-toggle');
