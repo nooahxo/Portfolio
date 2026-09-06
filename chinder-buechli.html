@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chinder-Büechli — Noah Bill</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
 
     *, *::before, *::after {
       box-sizing: border-box;
@@ -14,25 +14,28 @@
     }
 
     :root {
-      --black: rgba(0, 0, 0, 0.85);
+      --black: #000;
       --black-mid: rgba(0, 0, 0, 0.5);
-      --white: rgba(255, 255, 255, 0.95);
-      --white-mid: rgba(255, 255, 255, 0.6);
+    }
+
+    html, body {
+      height: auto;
     }
 
     body {
-      font-family: 'Outfit', sans-serif;
-      background: #fff;
+      font-family: 'Instrument Sans', sans-serif;
+      background: #000;
       color: var(--black);
+      padding-bottom: 4.5rem; /* Platz für die fixe Bottom-Bar */
     }
 
-    /* --- HEADER über dem Bild --- */
+    /* --- HEADER --- */
     header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 100;
+      z-index: 700;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -42,9 +45,9 @@
 
     .name {
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 500;
       line-height: 1.2;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
       text-decoration: none;
       color: #fff;
     }
@@ -65,112 +68,216 @@
       font-weight: 500;
       color: #fff;
       text-decoration: none;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.025em;
     }
 
-    /* --- BILDER REIHE --- */
-    .img-row {
+    /* --- GALLERY (vertikal, normaler Seiten-Scroll) --- */
+    .gallery {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Standard: eine Zeile = ein volles Bild */
+    .gallery-row {
+      width: 100%;
+      background: #000;
+    }
+
+    .gallery-row img,
+    .gallery-row video {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Optional: .gallery-row.double = zwei Elemente nebeneinander (z.B. Hochformate/Video) */
+    .gallery-row.double {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 6px;
     }
 
-    .img-row img, .img-row video {
+    .gallery-row.double img,
+    .gallery-row.double video {
       width: 100%;
-      height: calc(100vh - 5rem);
+      height: 100%;
       object-fit: cover;
-      display: block;
-      border: none;
-      outline: none;
     }
 
-    .img-row.first img {
-      height: calc(100vh - 4rem); /* wird per JS präzise gesetzt */
+    @media (max-width: 768px) {
+      .gallery-row img,
+      .gallery-row video {
+        height: 60vh;
+      }
+      .gallery-row.double {
+        grid-template-columns: 1fr;
+      }
     }
 
-    /* --- MARQUEE --- */
-    .marquee-wrap {
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 0.3rem 0;
-      background: #111;
+    /* --- BOTTOM BAR --- */
+    .bottom-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 700;
     }
 
-    .marquee-track {
-      display: inline-block;
-      animation: marquee 22s linear infinite;
+    .bar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.1rem 1.75rem;
+      mix-blend-mode: difference;
     }
 
-    .marquee-track span {
-      font-family: 'Outfit', sans-serif;
-      font-weight: 800;
-      font-style: normal;
-      font-size: clamp(1.2rem, 2.5vw, 2rem);
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+    }
+
+    .bar-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: #fff;
-      padding-right: 1rem;
     }
 
-    .marquee-track .dot {
-      font-style: normal;
-      color: rgba(255,255,255,0.4);
-      padding-right: 1rem;
-      font-size: 0.6em;
-      vertical-align: middle;
-    }
-
-    @keyframes marquee {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    /* --- BESCHREIBUNG --- */
-    .description {
-      padding: 3rem 1.75rem 6rem;
-      border-top: 1.5px solid var(--black);
-    }
-
-    .desc-text {
-      font-size: 1.35rem;
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-      color: var(--black);
-    }
-
-    /* --- BACK --- */
-    .back {
-      display: inline-block;
-      padding: 0 1.75rem 3rem;
+    .bar-project {
       font-size: 1rem;
       font-weight: 500;
-      color: var(--black-mid);
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .bar-info-btn {
+      background: none;
+      border: none;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .bar-count {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bar-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .bar-nav a {
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff;
       text-decoration: none;
     }
 
-    .back:hover { color: var(--black); }
 
-    /* --- LIGHTBOX --- */
-    #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 20000; align-items: center; justify-content: center; cursor: zoom-out; }
-    #lightbox.open { display: flex; }
-    #lightbox img { max-width: 95vw; max-height: 95vh; object-fit: contain; border-radius: 4px; }
-    .img-row img { cursor: zoom-in; }
+    .info-panel {
+      max-height: 0;
+      overflow: hidden;
+      background: #d2d2d2;
+      transition: max-height 0.4s ease;
+    }
+
+    .info-panel.open {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .info-panel-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 1.5rem 1.75rem 2rem;
+    }
+
+    .info-desc {
+      flex: 1;
+      max-width: 60%;
+      color: #000;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+    }
+
+    .info-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 0.4rem;
+      line-height: 1.35;
+    }
+
+    .meta-label {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #000;
+    }
+
+    .meta-value {
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #000;
+    }
+
+    /* --- INFO POPUP (Site-Info, separat von der Projekt-Info-Bar) --- */
+    #info-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 10000; backdrop-filter: blur(4px); }
+    #info-overlay.open { display: flex; align-items: center; justify-content: center; }
+    #info-popup { background: #111; padding: 2.5rem; width: 420px; max-width: 90vw; position: relative; border-radius: 18px; }
+    #info-close { position: absolute; top: 1rem; right: 1.25rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'Instrument Sans', sans-serif; line-height: 1; }
+    #info-close:hover { color: #fff; }
+    .info-time { font-size: 0.85rem; font-weight: 400; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+    .info-name { font-size: 1.6rem; font-weight: 700; margin-bottom: 1rem; color: #fff; }
+    .info-bio { font-size: 0.95rem; font-weight: 400; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+    .info-email { font-size: 0.95rem; color: #fff; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.3); }
 
     /* --- MOBILE --- */
     @media (max-width: 768px) {
-      .img-row { grid-template-columns: 1fr; }
-
-      .img-row img, .img-row video { height: 75vw; }
-      .img-row.first img { height: 75vw !important; }
-      .marquee-track span { font-size: clamp(1rem, 5vw, 2rem); }
-      .description { padding: 2rem 1.25rem 4rem; }
-      .desc-text { font-size: 1rem; }
+      .name { font-size: 0.95rem; }
+      nav { gap: 1rem; }
+      nav a { font-size: 0.95rem; }
+      .bar-row { padding: 1rem 1.25rem; }
+      .bar-project, .bar-info-btn, .bar-nav a { font-size: 0.9rem; }
+      .info-panel-inner {
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: 1.25rem 1.25rem 1.75rem;
+      }
+      .info-desc { font-size: 0.9rem; max-width: 100%; }
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER über Bild -->
+  <!-- HEADER -->
   <header>
     <a class="name" href="/index.html">
       Noah Bill<br>
@@ -183,97 +290,91 @@
     </nav>
   </header>
 
-  <!-- BILDER REIHE 1 — FÜÜR-BÜECHLI -->
-  <div class="img-row first">
-    <img src="/images/chinder-buechli/Fuur-Buechli_Cover.png" alt="Füür-Büechli">
-    <img src="/images/chinder-buechli/Inhalt1.png" alt="Füür-Büechli">
+  <!-- GALLERY -->
+  <div class="gallery" id="gallery">
+    <!-- Füür-Büechli -->
+    <div class="gallery-row"><img src="/images/chinder-buechli/Fuur-Buechli_Cover.png" alt="Füür-Büechli — Cover"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/Inhalt1.png" alt="Füür-Büechli — Inhalt"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/Inhalt2.png" alt="Füür-Büechli — Inhalt"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/Inhalt3.png" alt="Füür-Büechli — Inhalt"></div>
+
+    <!-- Wander-Büechli -->
+    <div class="gallery-row"><img src="/images/chinder-buechli/Wander-Buechli-Cover.png" alt="Wander-Büechli — Cover"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/wanderbuechli-inhalt1.png" alt="Wander-Büechli — Inhalt"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/wanderbuechli-inhalt2.png" alt="Wander-Büechli — Inhalt"></div>
+    <div class="gallery-row"><img src="/images/chinder-buechli/wanderbuechli-inhalt3.png" alt="Wander-Büechli — Inhalt"></div>
   </div>
 
-  <!-- MARQUEE 1 -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
-      <span>FÜÜR-BÜECHLI</span>
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <div class="bar-row">
+      <div class="bar-left">
+        <span class="bar-badge">5</span>
+        <span class="bar-project">Chinder-Büechli</span>
+        <button class="bar-info-btn" id="info-toggle">+ Info</button>
+      </div>
+      <div class="bar-nav">
+        <a href="/a24-frames.html">Vorheriges Projekt</a>
+        <a href="/herrmann-druck.html">Nächstes Projekt</a>
+      </div>
+    </div>
+
+    <div class="info-panel" id="info-panel">
+      <div class="info-panel-inner">
+        <p class="info-desc">Im Rahmen meiner Ausbildung konnte ich zwei Projekte in Zusammenarbeit mit «Eltern-Lehre» realisieren: das «Wander-Büechli» mit Kinderreimen und Wanderrouten sowie das «Füür-Büechli», das Kindern spielerisch den sicheren Umgang mit Feuer näherbringt. Idee, Gestaltung und Bildbearbeitung lagen bei beiden Büchlein in meiner Verantwortung. Beide Bücher waren in lokalen Buchhandlungen erhältlich.</p>
+
+        <div class="info-meta">
+          <div class="meta-row">
+            <span class="meta-label">Kunde:</span>
+            <span class="meta-value">Eltern-Lehre</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Leistungen:</span>
+            <span class="meta-value">Idee, Gestaltung, Bildbearbeitung</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Jahr:</span>
+            <span class="meta-value">2020</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- BILDER REIHE 2 -->
-  <div class="img-row">
-    <img src="/images/chinder-buechli/Inhalt2.png" alt="Füür-Büechli">
-    <img src="/images/chinder-buechli/Inhalt3.png" alt="Füür-Büechli">
-  </div>
-
-  <!-- LÜCKE -->
-  <div style="height: 8rem;"></div>
-
-  <!-- BILDER REIHE 3 — WANDER-BÜECHLI -->
-  <div class="img-row">
-    <img src="/images/chinder-buechli/Wander-Buechli-Cover.png" alt="Wander-Büechli">
-    <img src="/images/chinder-buechli/wanderbuechli-inhalt1.png" alt="Wander-Büechli">
-  </div>
-
-  <!-- MARQUEE 2 -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
-      <span>WANDER-BÜECHLI</span>
+  <!-- INFO POPUP (Site-Info) -->
+  <div id="info-overlay">
+    <div id="info-popup">
+      <button id="info-close">×</button>
+      <div class="info-time" id="info-clock"></div>
+      <div class="info-name">Noah Bill</div>
+      <p class="info-bio">Graphic designer and visual communicator based in Switzerland. Currently studying Visuelle Gestaltung and working on projects that sit at the intersection of type, image and concept.</p>
+      <a class="info-email" href="mailto:hallo@noahbill.ch">hallo@noahbill.ch</a>
     </div>
   </div>
-
-  <!-- BILDER REIHE 4 -->
-  <div class="img-row">
-    <img src="/images/chinder-buechli/wanderbuechli-inhalt2.png" alt="Wander-Büechli">
-    <img src="/images/chinder-buechli/wanderbuechli-inhalt3.png" alt="Wander-Büechli">
-  </div>
-
-  <!-- BESCHREIBUNG -->
-  <div class="description">
-    <p class="desc-text">
-      Im Rahmen meiner Ausbildung konnte ich zwei Projekte in Zusammenarbeit mit «Eltern-Lehre» realisieren: das «Wander-Büechli» mit Kinderreimen und Wanderrouten sowie das «Füür-Büechli», das Kindern spielerisch den sicheren Umgang mit Feuer näherbringt. Idee, Gestaltung und Bildbearbeitung lagen bei beiden Büchlein in meiner Verantwortung. Beide Bücher waren in lokalen Buchhandlungen erhältlich.
-    </p>
-  </div>
-
-  <!-- LIGHTBOX -->
-  <div id="lightbox"><img id="lightbox-img" src="" alt=""></div>
 
   <script>
-    // LIGHTBOX
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    document.querySelectorAll('.img-row img').forEach(function(img) {
-      img.addEventListener('click', function() { lightboxImg.src = this.src; lightbox.classList.add('open'); });
-    });
-    lightbox.addEventListener('click', function() { lightbox.classList.remove('open'); lightboxImg.src = ''; });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { lightbox.classList.remove('open'); lightboxImg.src = ''; } });
+    // (Bildzähler entfernt zugunsten von Vorheriges/Nächstes Projekt)
 
-    // MARQUEE SEAMLESS LOOP
-    document.querySelectorAll('.marquee-track').forEach(function(track) {
-      track.innerHTML += track.innerHTML;
+    // INFO-BAR (Projektbeschreibung) auf-/zuklappen
+    const infoToggle = document.getElementById('info-toggle');
+    const infoPanel = document.getElementById('info-panel');
+    infoToggle.addEventListener('click', function() {
+      const isOpen = infoPanel.classList.toggle('open');
+      infoToggle.textContent = isOpen ? '− Info' : '+ Info';
     });
 
-    function fixHeight() {
-      var marquee = document.querySelector('.marquee-wrap');
-      var marqueeH = marquee.offsetHeight;
-      var viewH = window.innerHeight;
-      var imgH = viewH - marqueeH;
-      document.querySelectorAll('.img-row.first img').forEach(function(img) {
-        img.style.height = imgH + 'px';
-      });
+    // SITE-INFO POPUP
+    const overlay = document.getElementById('info-overlay');
+    document.getElementById('info-btn').addEventListener('click', function(e) { e.preventDefault(); overlay.classList.add('open'); });
+    document.getElementById('info-close').addEventListener('click', function() { overlay.classList.remove('open'); });
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('open'); });
+    function updateClock() {
+      const now = new Date();
+      const time = now.toLocaleTimeString('de-CH', { timeZone: 'Europe/Zurich', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      document.getElementById('info-clock').textContent = 'Bern (CH) — ' + time;
     }
-    fixHeight();
-    window.addEventListener('resize', fixHeight);
+    updateClock();
+    setInterval(updateClock, 1000);
   </script>
 
 </body>
