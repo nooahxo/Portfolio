@@ -86,7 +86,8 @@
 
     .gallery-row img {
       width: 100%;
-      height: 100vh;
+      aspect-ratio: 1853 / 870;
+      height: auto;
       object-fit: cover;
       display: block;
     }
@@ -98,16 +99,19 @@
       gap: 6px;
     }
 
+    .book-divider {
+      background: #000;
+      height: 6rem;
+    }
+
     .gallery-row.double img {
       width: 100%;
       height: 100%;
+      aspect-ratio: auto;
       object-fit: cover;
     }
 
     @media (max-width: 768px) {
-      .gallery-row img {
-        height: 60vh;
-      }
       .gallery-row.double {
         grid-template-columns: 1fr;
       }
@@ -294,6 +298,16 @@
     <div class="gallery-row"><img src="/images/Jahrring/Inhalt1.jpg" alt="Jahrring — Inhalt 1"></div>
     <div class="gallery-row"><img src="/images/Jahrring/Inhalt2.jpg" alt="Jahrring — Inhalt 2"></div>
     <div class="gallery-row"><img src="/images/Jahrring/Inhalt3.jpg" alt="Jahrring — Inhalt 3"></div>
+
+    <div class="book-divider"></div>
+
+    <div class="gallery-row"><img src="/images/Jahrring/titelbild.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh1.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh2.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh3.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh4.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh5.jpg" alt="Jahrring"></div>
+    <div class="gallery-row"><img src="/images/Jahrring/inh6.jpg" alt="Jahrring"></div>
   </div>
 
   <!-- BOTTOM BAR -->
